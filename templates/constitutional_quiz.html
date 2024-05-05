@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supreme Court Decision Maker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        #cases {
+            margin-top: 20px;
+        }
+
+        .case {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .case h2 {
+            margin-top: 0;
+            color: #666;
+        }
+
+        .case p {
+            color: #888;
+        }
+
+        form {
+            margin-top: 10px;
+        }
+
+        label {
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Supreme Court Decision Maker</h1>
+        <div id="cases">
+            {% for case in cases %}
+                <div class="case">
+                    <h2>{{ case.name }}</h2>
+                    <p>{{ case.issue }}</p>
+                    <form action="/PSCI100/submit_vote" method="post">
+                        <input type="hidden" name="case_name" value="{{ case.name }}">
+                        <label>
+                            <input type="radio" name="{{ case.name }}" value="majority">
+                            Majority
+                        </label>
+                        <label>
+                            <input type="radio" name="{{ case.name }}" value="dissenting">
+                            Dissenting
+                        </label>
+                        <button type="submit">Vote</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

@@ -10,70 +10,10 @@ app = Flask(__name__)
 popular= []
 
 #connects default URL to a function
-@app.route('/', methods=['GET','POST'])
+@app.route('/')
 def home():
-  if(request.method == 'POST'):
-    form = request.form
-    product = form['product']  
-    open("products.txt", "a").write("\n" + product)
-    a = open("products.txt", "r").read()
-    popular = a.split("\n")
-    if(len(popular) > 7):
-      popular.pop(0)
-      seperator = '\n'
-      newContent = seperator.join(popular)
-      open("products.txt", "w").write(newContent)
-    return redirect("https://www.amazon.com/s?k=" + product +"&ref=nb_sb_noss")
-  a = open("products.txt", "r").read()
-  popular = a.split("\n")
-  return render_template('home.html', projects=projects.setup(), popular=popular)
+  return render_template('home2.html')
 
-@app.route('/flask/')
-def flask():
-    #Flask import uses Jinga to render HTML
-    return render_template("fseries.html", projects=projects.setup())
-
-
-@app.route('/hello/')
-def hello():
-    #Flask import uses Jinga to render HTML
-    return render_template("hseries.html", projects=projects.setup())
-
-
-@app.route('/popular-items/')
-def popularitems():
-  a = open("products.txt", "r").read()
-  popular = a.split("\n")
-  return render_template("popularitem.html", projects=projects.setup(), popular=popular)
-
-@app.route('/calculator/', methods=['GET', 'POST'])
-def calculator():
-  if(request.method == 'POST'):
-    form = request.form
-    a = form['type']
-    b = form['num1']
-    c = form['num2']
-    if a == 1:
-      addition = np.add(b,c)
-      result = "\nAdded values: \n" + addition
-    elif a == 2:
-      subtraction = np.subtract(b,c)
-      result = "\nSubtracted values: \n" + subtraction
-    elif a == 3:
-      multiply = np.multiply(b,c)
-      result = "\nMultiplied values" + multiply
-    elif a == 4:
-      divide = np.divide(b,c)
-      result = "\nDivided values" + divide
-    elif a == 5:
-      power = np.power(b,c)
-      result = "\nPower values" + power
-    elif a == 6:
-      modulus = np.mod(b,c)
-      result = "\nModulus values" + modulus
-
-    return render_template('calculator.html', result = result)
-  return render_template('calculator.html')
 
 
 # List of questions
@@ -85,7 +25,6 @@ questions = [
     { "text": "The Miranda warning is required to be given before any interrogation of a suspect in police custody.", "valid": True },
     # Add more questions here
 ]
-
 
 @app.route('/PSCI100/argument_game', methods=['GET', 'POST'])
 def argument_game():
@@ -101,13 +40,37 @@ def argument_game():
                 score += 1
     return render_template('argument_game.html', questions=questions, responses=responses, score=score, num_questions=num_questions)
 
-# @app.route('/PSCI100/mock_trial')
-# def mock_trial():
-#     return render_template('mock_trial.html')
 
-# @app.route('/PSCI100/supreme_court_decision_maker')
-# def supreme_court_decision_maker():
-#     return render_template('supreme_court_decision_maker.html')
+# List of quiz questions
+questions = [
+    {
+        "question": "Which article of the Constitution establishes the legislative branch?",
+        "options": ["Article I", "Article II", "Article III", "Article IV"],
+        "correct_answer": "Article I"
+    },
+    {
+        "question": "How many amendments are there in the Bill of Rights?",
+        "options": ["10", "12", "5", "27"],
+        "correct_answer": "10"
+    },
+    {
+        "question": "Which amendment guarantees freedom of speech?",
+        "options": ["First Amendment", "Fourth Amendment", "Fifth Amendment", "Sixth Amendment"],
+        "correct_answer": "First Amendment"
+    },
+    # Add more questions here
+]
+
+@app.route('/PSCI100/constitutional_quiz', methods=['GET', 'POST'])
+def constitutional_quiz():
+    score = 0
+    if request.method == 'POST':
+        for question in questions:
+            selected_answer = request.form.get(question["question"])
+            if selected_answer == question["correct_answer"]:
+                score += 1
+    return render_template('constitutional_quiz.html', questions=questions, score=score)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
