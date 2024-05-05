@@ -1,4 +1,3 @@
-import projects
 from flask import Flask, render_template, url_for, request, redirect, flash, render_template_string
 import numpy as np
 #from flask_sqlalchemy import SQLAlchemy
@@ -13,7 +12,6 @@ popular= []
 @app.route('/')
 def home():
   return render_template('home2.html')
-
 
 
 # List of questions
@@ -42,7 +40,7 @@ def argument_game():
 
 
 # List of quiz questions
-questions = [
+questions2 = [
     {
         "question": "Which article of the Constitution establishes the legislative branch?",
         "options": ["Article I", "Article II", "Article III", "Article IV"],
@@ -65,11 +63,11 @@ questions = [
 def constitutional_quiz():
     score = 0
     if request.method == 'POST':
-        for question in questions:
+        for question in questions2:
             selected_answer = request.form.get(question["question"])
             if selected_answer == question["correct_answer"]:
                 score += 1
-    return render_template('constitutional_quiz.html', questions=questions, score=score)
+    return render_template('constitutional_quiz.html', questions2=questions2, score=score)
 
 
 if __name__ == '__main__':

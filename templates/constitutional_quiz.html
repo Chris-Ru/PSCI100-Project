@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Supreme Court Decision Maker</title>
+    <title>Constitutional Quiz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: #f8f9fa;
+            color: #333;
             margin: 0;
             padding: 0;
         }
@@ -17,50 +18,33 @@
             margin: 0 auto;
             padding: 20px;
             background-color: #fff;
-            border-radius: 8px;
+            border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        h1 {
+        h1, h2 {
             text-align: center;
-            color: #333;
-        }
-
-        #cases {
-            margin-top: 20px;
-        }
-
-        .case {
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-        }
-
-        .case h2 {
-            margin-top: 0;
-            color: #666;
-        }
-
-        .case p {
-            color: #888;
         }
 
         form {
-            margin-top: 10px;
+            margin-top: 20px;
+        }
+
+        .question {
+            margin-bottom: 20px;
         }
 
         label {
-            margin-right: 10px;
+            display: block;
+            margin-bottom: 10px;
         }
 
         button {
-            padding: 8px 15px;
+            padding: 10px 20px;
             background-color: #007bff;
             color: #fff;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
         }
 
@@ -71,27 +55,22 @@
 </head>
 <body>
     <div class="container">
-        <h1>Supreme Court Decision Maker</h1>
-        <div id="cases">
-            {% for case in cases %}
-                <div class="case">
-                    <h2>{{ case.name }}</h2>
-                    <p>{{ case.issue }}</p>
-                    <form action="/PSCI100/submit_vote" method="post">
-                        <input type="hidden" name="case_name" value="{{ case.name }}">
-                        <label>
-                            <input type="radio" name="{{ case.name }}" value="majority">
-                            Majority
-                        </label>
-                        <label>
-                            <input type="radio" name="{{ case.name }}" value="dissenting">
-                            Dissenting
-                        </label>
-                        <button type="submit">Vote</button>
-                    </form>
-                </div>
+        <h1>Constitutional Quiz</h1>
+        <form action="/PSCI100/constitutional_quiz" method="post">
+            {% for question in questions2 %}
+            <div class="question">
+                <p>{{ question.question }}</p>
+                {% for option in question.options %}
+                <label>
+                    <input type="radio" name="{{ question.question }}" value="{{ option }}">
+                    {{ option }}
+                </label>
+                {% endfor %}
+            </div>
             {% endfor %}
-        </div>
+            <button type="submit">Submit Quiz</button>
+        </form>
+        <h2>Your Score: {{ score }}</h2>
     </div>
 </body>
 </html>
