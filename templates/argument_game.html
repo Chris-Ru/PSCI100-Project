@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Argument Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #responses {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        #responses h2 {
+            margin-top: 0;
+        }
+
+        #responses ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #responses li {
+            margin-bottom: 10px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form p {
+            margin-bottom: 10px;
+        }
+
+        form input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Argument Game</h1>
+        {% if responses %}
+        <div id="responses">
+            <!-- <h2>Your Responses:</h2>
+            <ul>
+                {% for response in responses %}
+                    <li>{{ response.text }}: {{ response.response }}</li>
+                {% endfor %}
+            </ul> -->
+            <p>Your Score: {{ score }} / {{ num_questions }}</p>
+        </div>
+        {% endif %}
+        <form id="argument-form" action="/PSCI100/argument_game" method="post">
+            <div id="arguments">
+                {% for question in questions %}
+                    <p>{{ question.text }}</p>
+                    <input type="radio" id="agree" name="{{ loop.index }}" value="True">
+                    <label for="agree">True</label>
+                    <input type="radio" id="disagree" name="{{ loop.index }}" value="False">
+                    <label for="disagree">False</label><br>
+                {% endfor %}
+            </div>
+            <div style="padding-top:2%;">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
