@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>Constitutional Quiz</title>
     <style>
         body {
@@ -51,12 +52,44 @@
         button:hover {
             background-color: #0056b3;
         }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+            background-color: #111;
+        }
     </style>
 </head>
 <body>
+    <ul>
+        <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/PSCI100/argument_game"><i class="fas fa-balance-scale-left"></i> Argument Game</a></li>
+    </ul>
+
     <div class="container">
         <h1>Constitutional Quiz</h1>
-        <form action="/PSCI100/constitutional_quiz" method="post">
+        <div id="responses">
+            <p>Your Score: {{ score }} / {{ num_questions }}</p>
+        </div>
+        <form action="/PSCI100/constitutional_quiz" method="POST">
             {% for question in questions2 %}
             <div class="question">
                 <p>{{ question.question }}</p>
@@ -70,7 +103,6 @@
             {% endfor %}
             <button type="submit">Submit Quiz</button>
         </form>
-        <h2>Your Score: {{ score }}</h2>
     </div>
 </body>
 </html>

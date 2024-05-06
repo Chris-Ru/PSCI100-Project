@@ -67,7 +67,7 @@ def constitutional_quiz():
             selected_answer = request.form.get(question["question"])
             if selected_answer == question["correct_answer"]:
                 score += 1
-    return render_template('constitutional_quiz.html', questions2=questions2, score=score)
+    return render_template('constitutional_quiz.html', questions2=questions2, score=score, num_questions=len(questions2))
 
 
 if __name__ == '__main__':
