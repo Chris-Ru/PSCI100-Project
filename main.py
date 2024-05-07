@@ -59,7 +59,6 @@ questions = [
 def argument_game():
     score = 0
     random_questions = random.sample(questions, 10)  # Randomly select 10 questions
-    size = len(random_questions)
 
     if request.method == 'POST':
         responses = []
@@ -71,7 +70,7 @@ def argument_game():
     else:
         responses = None
 
-    return render_template('argument_game.html', questions=random_questions, responses=responses, score=score, size=size)
+    return render_template('argument_game.html', questions=random_questions, responses=responses, score=score, size=len(random_questions))
 
 
 # List of quiz questions
@@ -91,18 +90,71 @@ questions2 = [
         "options": ["First Amendment", "Fourth Amendment", "Fifth Amendment", "Sixth Amendment"],
         "correct_answer": "First Amendment"
     },
+    {
+        "question": "What does the First Amendment to the United States Constitution protect?",
+        "options": ["Freedom of speech", "Freedom of religion", "Freedom of the press", "All of the above"],
+        "correct_answer": "All of the above"
+    },
+    {
+        "question": "Who has the power to declare war according to the United States Constitution?",
+        "options": ["The President", "The Congress", "The Supreme Court", "The State Governors"],
+        "correct_answer": "The Congress"
+    },
+    {
+        "question": "What is the term length for a United States Senator?",
+        "options": ["2 years", "4 years", "6 years", "8 years"],
+        "correct_answer": "6 years"
+    },
+    {
+        "question": "Which branch of government is responsible for interpreting laws?",
+        "options": ["Legislative", "Executive", "Judicial", "Administrative"],
+        "correct_answer": "Judicial"
+    },
+    {
+        "question": "Who is the Commander-in-Chief of the United States military?",
+        "options": ["The President", "The Secretary of Defense", "The Vice President", "The Speaker of the House"],
+        "correct_answer": "The President"
+    },
+    {
+        "question": "What is the purpose of the Electoral College?",
+        "options": ["To elect the President and Vice President", "To elect Senators", "To elect Governors", "To elect Mayors"],
+        "correct_answer": "To elect the President and Vice President"
+    },
+    {
+        "question": "Which amendment guarantees the right to a fair trial?",
+        "options": ["First Amendment", "Fifth Amendment", "Sixth Amendment", "Eighth Amendment"],
+        "correct_answer": "Sixth Amendment"
+    },
+    {
+        "question": "What is the term length for a President of the United States?",
+        "options": ["2 years", "4 years", "6 years", "8 years"],
+        "correct_answer": "4 years"
+    },
+    {
+        "question": "Who has the power to veto legislation passed by Congress?",
+        "options": ["The President", "The Supreme Court", "The Speaker of the House", "The Senate Majority Leader"],
+        "correct_answer": "The President"
+    }
     # Add more questions here
 ]
 
 @app.route('/PSCI100/constitutional_quiz', methods=['GET', 'POST'])
 def constitutional_quiz():
     score = 0
+    random_questions2 = random.sample(questions2, 10)  # Randomly select 10 questions
+
     if request.method == 'POST':
-        for question in questions2:
-            selected_answer = request.form.get(question["question"])
-            if selected_answer == question["correct_answer"]:
+        responses = []
+        for index, question in enumerate(random_questions2):
+            response = request.form.get(question["question"])  # Corrected index here
+            print(response)
+            responses.append({"text": question["question"], "response": response})
+            if response is not None and response.lower() == str(question["correct_answer"]).lower():
                 score += 1
-    return render_template('constitutional_quiz.html', questions2=questions2, score=score, num_questions=len(questions2))
+    else:
+        responses = None
+
+    return render_template('constitutional_quiz.html', questions2=random_questions2, responses=responses, score=score, size=len(random_questions2))
 
 
 if __name__ == '__main__':
