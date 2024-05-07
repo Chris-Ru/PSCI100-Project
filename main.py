@@ -53,12 +53,12 @@ questions = [
     { "text": "The Chief Justice of the United States is responsible for drafting executive orders.", "valid": False },
 ]
 
-random_questions = random.sample(questions, 10)  # Randomly select 10 questions
 
 
 @app.route('/PSCI100/argument_game', methods=['GET', 'POST'])
 def argument_game():
     score = 0
+    random_questions = random.sample(questions, 10)  # Randomly select 10 questions
     size = len(random_questions)
 
     if request.method == 'POST':
