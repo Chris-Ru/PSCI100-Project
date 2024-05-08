@@ -119,7 +119,7 @@
             <p>Your Score: {{ score }} / {{ size }}</p>
         </div>
         {% endif %}
-        <form id="argument-form" action="/PSCI100/argument_game" method="post">
+        <form id="argument-form" action="/argument_game" method="post">
             <div id="arguments">
                 {% for question in questions %}
                     <p>{{ question.text }}</p>

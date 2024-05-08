@@ -98,7 +98,7 @@
             <p>Your Score: {{ score }} / {{ size }}</p>
         </div>
         {% endif %}
-        <form action="/PSCI100/constitutional_quiz" method="POST">
+        <form action="/constitutional_quiz" method="POST">
             {% for question in questions2 %}
             <div class="question">
                 <p>{{ question.question }}</p>
