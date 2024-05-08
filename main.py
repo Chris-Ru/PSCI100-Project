@@ -55,7 +55,7 @@ questions = [
 
 
 
-@app.route('/PSCI100/argument_game', methods=['GET', 'POST'])
+@app.route('/argument_game', methods=['GET', 'POST'])
 def argument_game():
     score = 0
     random_questions = random.sample(questions, 10)  # Randomly select 10 questions
@@ -138,7 +138,7 @@ questions2 = [
     # Add more questions here
 ]
 
-@app.route('/PSCI100/constitutional_quiz', methods=['GET', 'POST'])
+@app.route('/constitutional_quiz', methods=['GET', 'POST'])
 def constitutional_quiz():
     score = 0
     random_questions2 = random.sample(questions2, 10)  # Randomly select 10 questions
@@ -155,6 +155,10 @@ def constitutional_quiz():
         responses = None
 
     return render_template('constitutional_quiz.html', questions2=random_questions2, responses=responses, score=score, size=len(random_questions2))
+
+@app.route('/jeopardy', methods=['GET', 'POST'])
+def jeopardy():
+    return render_template('jeopardy.html')
 
 
 if __name__ == '__main__':
